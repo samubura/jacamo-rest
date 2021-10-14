@@ -4,6 +4,6 @@
 
 mas default {
 
-    platform: jacamo.rest.JCMRest("--main 2181") // starts platform on port 2181
+    platform: jacamo.rest.JCMRest("--main 2181 --restPort 8080") // starts platform on port 2181
 
 }
