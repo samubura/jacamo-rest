@@ -2,7 +2,7 @@
     simply runs the platform with no agent
 */
 
-mas plat {
+mas default {
 
     platform: jacamo.rest.JCMRest("--main 2181") // starts platform on port 2181
 

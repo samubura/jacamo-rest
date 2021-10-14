@@ -35,3 +35,10 @@ out/
 
 # IntelliJ project files
 .idea/
+
+#custom
+src/agt/*
+*.jcm
+
+!src/agt/empty.asl
+!default.jcm
