@@ -91,7 +91,6 @@ task runDefault (type: JavaExec, dependsOn: 'classes') {
     description 'runs the JaCaMo platform'
     doFirst {
         mkdir 'log'
-        sourceSets.main.runtimeClasspath.each { println it}
     }
     main 'jacamo.infra.JaCaMoLauncher'
     args 'src/jcm/default.jcm'
