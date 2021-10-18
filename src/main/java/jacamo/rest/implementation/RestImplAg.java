@@ -100,7 +100,9 @@ public class RestImplAg extends AbstractBinder {
     })
     public Response postAgent(
             @PathParam("agentname") String agName, 
-            @DefaultValue("false") @QueryParam("only_wp") boolean onlyWP, 
+            @DefaultValue("false") @QueryParam("only_wp") boolean onlyWP,
+            //TODO SAMU modified parameter
+            @DefaultValue("null") @QueryParam("type") String type,
             Map<String,String> metaData,
             @Context UriInfo uriInfo) {
         try {
@@ -111,7 +113,7 @@ public class RestImplAg extends AbstractBinder {
                     return Response.status(500, "Agent "+agName+" already exists!").build();
             } else {
                 return Response
-                        .created(new URI(uriInfo.getBaseUri() + "agents/" + tAg.createAgent(agName)))
+                        .created(new URI(uriInfo.getBaseUri() + "agents/" + tAg.createAgent(agName, type)))
                         .build();
             }
         } catch (Exception e) {
@@ -147,7 +149,7 @@ public class RestImplAg extends AbstractBinder {
     }
 
     /**
-     * TODO: Update an agent (replace its code and reload).
+     * to do Update an agent (replace its code and reload).
      * 
      * @param agName agent's name
      * @return HTTP 200 Response (ok status) or 500 Internal Server Error in case of
@@ -156,14 +158,14 @@ public class RestImplAg extends AbstractBinder {
     /* API Version 0.6?
     @Path("/{agentname}")
     @PUT
-    @ApiOperation(value = "TODO: Update an agent (replace its code and reload).")
+    @ApiOperation(value = "to do : Update an agent (replace its code and reload).")
     @ApiResponses(value = { 
             @ApiResponse(code = 200, message = "success"),
             @ApiResponse(code = 500, message = "internal error")
     })
     public Response updateAgent(@PathParam("agentname") String agName) {
         try {
-            //TODO: to be developed
+            //to do: to be developed
             return Response
                     .ok()
                     .build();
@@ -281,6 +283,7 @@ public class RestImplAg extends AbstractBinder {
     })
     public Response postAgentPlans(@PathParam("agentname") String agName, String plans) {
         try {
+            System.out.println(plans);
             tAg.addAgentPlan(agName, plans);
             return Response
                     .ok()
@@ -427,7 +430,7 @@ public class RestImplAg extends AbstractBinder {
      * Append a service to the agent.
      * 
      * @param agName agent name
-     * @param serviceid service identification
+     *
      * @param values a map of services (optional)
      * @return HTTP 200 Response (ok status) or 500 Internal Server Error in case of
      *         error (based on https://tools.ietf.org/html/rfc7231#section-6.6.1)
@@ -470,7 +473,7 @@ public class RestImplAg extends AbstractBinder {
      * Remove a service from the agent.
      * 
      * @param agName agent name
-     * @param serviceid service identification
+     *
      * @return HTTP 200 Response (ok status) or 500 Internal Server Error in case of
      *         error (based on https://tools.ietf.org/html/rfc7231#section-6.6.1)
      */

@@ -76,24 +76,35 @@ public class TranslAg {
     }
 
     /**
-     * Create agent and corresponding asl file with the agName if possible, or agName_1, agName_2,...
+     * Create agent with the given name if available (otherwise name_1...)
+     * If type is null an empty agent that prints Hello! is instantiated
+     *
      * 
-     * @param agName
-     * @return
+     * @param agName the requested name for the agent
+     * @param type the name of the agent source file
+     * @return the assigned name of the newly created agent
      * @throws Exception
      * @throws JasonException
      */
-    public String createAgent(String agName) throws Exception, JasonException {
-        String givenName = RuntimeServicesFactory.get().createAgent(agName, null, null, null, null, null, null);
+    public String createAgent(String agName, String type) throws Exception, JasonException {
+        //TODO SAMU modified to accept the type
+        if(type == null){
+            type = "empty.asl";
+        }
+        String givenName = RuntimeServicesFactory.get().createAgent(agName, type,  null, null, null, null, null);
         RuntimeServicesFactory.get().startAgent(givenName);
 
         Agent ag = getAgent(givenName);
 
+        //includes default stuff for agents
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("{ include(\"$jacamoJar/templates/common-cartago.asl\") }\n");
         stringBuilder.append("{ include(\"$jacamoJar/templates/common-moise.asl\") }\n");
         ag.load(new StringInputStream( stringBuilder.toString()), "source-from-rest-api");
+
+        //agentLog created
         createAgLog(givenName, ag);
+
         return givenName;
     }
     
@@ -358,8 +369,8 @@ public class TranslAg {
     /**
      * Send a command to an agent
      * 
-     * @param agName name of the agent
-     * @param sCmd   command to be executed
+     * @param ag name of the agent
+     * @param lCmd   command to be executed
      * @return Status message
      * @throws ParseException 
      */
@@ -557,7 +568,7 @@ public class TranslAg {
      * Remove a service from a given agent
      * 
      * @param agName
-     * @param values
+     * @param service
      * @throws Exception
      */
     public void removeServiceToAgent(String agName, String service) throws Exception {

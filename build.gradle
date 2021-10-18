@@ -120,7 +120,7 @@ jar {
       attributes(
         'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
         'Main-Class': 'jacamo.infra.JaCaMoLauncher',
-        'args': 'src/jcm/main.jcm'
+        'args': 'src/jcm/default.jcm'
       )
     }
 }
@@ -158,79 +158,3 @@ task sourceJar (type : Jar) {
     from sourceSets.main.allSource
 }
 
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from components.java
-            artifact sourceJar
-            artifact javadocJar
-
-            artifactId 'jacamo-rest'
-        }
-    }
-}
-
-// transfer local maven artifact to our maven2 repository at sourceforge
-/*task publishMavenSF(dependsOn: [ 'build', 'publishToMavenLocal']) {
-  doLast {
-    def wdir = System.getProperty("user.home")+'/.m2/repository/org/jacamo/jacamo-rest'
-    def tdir = 'jomifred,jacamo@web.sf.net:/home/project-web/jacamo/htdocs/maven2/org/jacamo/jacamo-rest'
-    exec {
-        commandLine 'scp', '-r', project.version, tdir
-        workingDir wdir
-    }
-    exec {
-        commandLine 'cp', 'maven-metadata-local.xml', 'maven-metadata.xml'
-        workingDir wdir
-    }
-    exec {
-        commandLine 'scp', 'maven-metadata.xml', tdir
-        workingDir wdir
-    }
-  }
-}*/
-
-task publishMavenGitHub(dependsOn: [ 'build', 'publishToMavenLocal']) {
-	doLast {
-	    def wdir = System.getProperty("user.home")+'/.m2/repository/org/jacamo/jacamo-rest'
-	    def rdir = System.getProperty("user.home")+'/pro/jacamo-mvn-repo'
-	    exec {
-	        commandLine 'git', 'pull'
-	        workingDir rdir
-	    }
-	    copy {
-	        from wdir
-	        into rdir + '/org/jacamo/jacamo-rest'
-	    }
-	    exec {
-	        commandLine 'git', 'add', '*'
-	        workingDir rdir
-	    }
-	    exec {
-	        commandLine 'git', 'commit', '-a', '-m', 'new version of jacamo rest '+project.version
-	        workingDir rdir
-	    }
-	    exec {
-	        commandLine 'git', 'push'
-	        workingDir rdir
-	    }
-	}
-
-	swagger {
-	    apiSource {
-	        springmvc = false
-	        locations = [ 'jacamo.rest' ]
-	        schemes = [ 'http' ]
-	        host = '127.0.0.1:8080'
-	        basePath = ''
-	        info {
-	            title = 'REST API for JaCaMo'
-	            version = 'v0.5 - SNAPSHOT'
-	            description = 'More information: https://github.com/jacamo-lang/jacamo-rest'
-	        }
-	        outputPath = "${project.rootDir}/generated/document.html"
-	        swaggerDirectory = "${project.rootDir}/generated/swagger-ui"
-	    }
-	}
-}
