@@ -1,4 +1,4 @@
-package jacamo.rest.util;
+package mas.rest.util;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -28,7 +28,7 @@ public class Message {
         this(id,p,s,r,c);
         this.inReplyTo = inReplyTo;
     }
-    
+
     public String getPerformative() {
         return performative;
     }

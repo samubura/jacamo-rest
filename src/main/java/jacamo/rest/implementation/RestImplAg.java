@@ -1,4 +1,4 @@
-package jacamo.rest.implementation;
+package mas.rest.implementation;
 
 import java.net.URI;
 import java.util.Map;
@@ -27,13 +27,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import jacamo.rest.mediation.TranslAg;
-import jacamo.rest.util.Message;
+import mas.rest.mediation.TranslAg;
+import mas.rest.util.Message;
 import jason.ReceiverNotFoundException;
 
 /**
  * Agent's REST compile class
- * 
+ *
  * @author Jomi Fred Hubner
  * @author Cleber Jorge Amaral
  *
@@ -50,10 +50,10 @@ public class RestImplAg extends AbstractBinder {
     protected void configure() {
         bind(new RestImplAg()).to(RestImplAg.class);
     }
-    
+
     /**
-     * Get list of agent   
-     * 
+     * Get list of agent
+     *
      * Example:
      * {"kk":{ "type":"Jason",
      *         "inbox":"http://192.168.0.19:8080/agents/kk/inbox",
@@ -62,13 +62,13 @@ public class RestImplAg extends AbstractBinder {
      *         "inbox":"http://192.168.0.19:8080/agents/marcos/inbox",
      *         "url":"http://192.168.0.19:8080/agents/marcos"}
      * }
-     * 
+     *
      * @return HTTP 200 Response (ok status)
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Get list of agent names")
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
             @ApiResponse(code = 200, message = "success"),
             @ApiResponse(code = 500, message = "internal error")
     })
@@ -84,7 +84,7 @@ public class RestImplAg extends AbstractBinder {
      * Create an Agent. Produces PLAIN TEXT with HTTP response for this operation. If
      * an ASL file with the given name exists, it will launch an agent with existing
      * code. Otherwise, creates an agent that will start say 'Hi'.
-     * 
+     *
      * @param agName name of the agent to be created
      * @return HTTP 201 Response (created) or 500 Internal Server Error in case of
      *         error (based on https://tools.ietf.org/html/rfc7231#section-6.6.1)
@@ -94,12 +94,12 @@ public class RestImplAg extends AbstractBinder {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     @ApiOperation(value = "Create an Agent.")
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
             @ApiResponse(code = 201, message = "generated uri"),
             @ApiResponse(code = 500, message = "internal error")
     })
     public Response postAgent(
-            @PathParam("agentname") String agName, 
+            @PathParam("agentname") String agName,
             @DefaultValue("false") @QueryParam("only_wp") boolean onlyWP,
             //TODO SAMU modified parameter
             @DefaultValue("null") @QueryParam("type") String type,
@@ -124,7 +124,7 @@ public class RestImplAg extends AbstractBinder {
 
     /**
      * Kill an agent.
-     * 
+     *
      * @param agName agent's name to be killed
      * @return HTTP 200 Response (ok status) or 500 Internal Server Error in case of
      *         error (based on https://tools.ietf.org/html/rfc7231#section-6.6.1)
@@ -132,7 +132,7 @@ public class RestImplAg extends AbstractBinder {
     @Path("/{agentname}")
     @DELETE
     @ApiOperation(value = "Kill an agent.")
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
             @ApiResponse(code = 200, message = "success"),
             @ApiResponse(code = 500, message = "internal error")
     })
@@ -150,7 +150,7 @@ public class RestImplAg extends AbstractBinder {
 
     /**
      * to do Update an agent (replace its code and reload).
-     * 
+     *
      * @param agName agent's name
      * @return HTTP 200 Response (ok status) or 500 Internal Server Error in case of
      *         error (based on https://tools.ietf.org/html/rfc7231#section-6.6.1)
@@ -159,7 +159,7 @@ public class RestImplAg extends AbstractBinder {
     @Path("/{agentname}")
     @PUT
     @ApiOperation(value = "to do : Update an agent (replace its code and reload).")
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
             @ApiResponse(code = 200, message = "success"),
             @ApiResponse(code = 500, message = "internal error")
     })
@@ -174,11 +174,11 @@ public class RestImplAg extends AbstractBinder {
             return Response.status(500, e.getMessage()).build();
         }
     }*/
-    
+
     /**
      * Get agent's intentions status. Example:
      * {"idle":true,"nbIntentions":1,"intentions":[{"size":1,"finished":false,"id":161,"suspended":false}]}
-     * 
+     *
      * @param agName agent's name
      * @return HTTP 200 Response (ok status) or 500 Internal Server Error in case of
      *         error (based on https://tools.ietf.org/html/rfc7231#section-6.6.1)
@@ -187,7 +187,7 @@ public class RestImplAg extends AbstractBinder {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Get agent's intentions status.")
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
             @ApiResponse(code = 200, message = "success"),
             @ApiResponse(code = 500, message = "internal error")
     })
@@ -206,17 +206,17 @@ public class RestImplAg extends AbstractBinder {
 
     /**
      * Get agent information (namespaces, roles, missions and workspaces).
-     * 
+     *
      * @param agName name of the agent
      * @return HTTP 200 Response (ok status) or 500 Internal Server Error in case of
      *         error (based on https://tools.ietf.org/html/rfc7231#section-6.6.1)
-     * 
+     *
      */
     @Path("/{agentname}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Get agent information (namespaces, roles, missions and workspaces).")
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
             @ApiResponse(code = 200, message = "success"),
             @ApiResponse(code = 500, message = "internal error")
     })
@@ -235,12 +235,12 @@ public class RestImplAg extends AbstractBinder {
 
     /**
      * Return agent's plans
-     * 
+     *
      * @param agName name of the agent
      * @param label optional filter
      * @return HTTP 200 Response (ok status) or 500 Internal Server Error in case of
      *         error (based on https://tools.ietf.org/html/rfc7231#section-6.6.1)
-     *         Example: [\"@l__1[source(self)]\":\"@l__1[source(self)] +!start <- .print(hi).", 
+     *         Example: [\"@l__1[source(self)]\":\"@l__1[source(self)] +!start <- .print(hi).",
      *         "\"@l__2[source(self)]\": \"@l__2[source(self)] +sayHi[source(A)] <- .print(\"I received hi from \",A)."]
      */
     @Path("/{agentname}/plans")
@@ -248,10 +248,10 @@ public class RestImplAg extends AbstractBinder {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(
             value = "Get agent plans.",
-            notes = "Example: [\"@l__1[source(self)]\":\"@l__1[source(self)] +!start <- .print(hi).\", "+ 
+            notes = "Example: [\"@l__1[source(self)]\":\"@l__1[source(self)] +!start <- .print(hi).\", "+
                             "\"@l__2[source(self)]\": \"@l__2[source(self)] +sayHi[source(A)] <- .print(\"I received hi from \",A).\"]"
     )
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
             @ApiResponse(code = 200, message = "success"),
             @ApiResponse(code = 500, message = "internal error")
     })
@@ -264,10 +264,10 @@ public class RestImplAg extends AbstractBinder {
             return Response.status(500, e.getMessage()).build();
         }
     }
-    
+
     /**
      * Append new plans into an agent.
-     * 
+     *
      * @param agName              name of the agent
      * @param plans               plans to be uploaded, as an String
      * @return HTTP 200 Response (ok status) or 500 Internal Server Error in case of
@@ -277,7 +277,7 @@ public class RestImplAg extends AbstractBinder {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Append new plans into an agent.")
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
             @ApiResponse(code = 200, message = "success"),
             @ApiResponse(code = 500, message = "internal error")
     })
@@ -296,7 +296,7 @@ public class RestImplAg extends AbstractBinder {
 
     /**
      * Send a command to an agent returning a status message.
-     * 
+     *
      * @param cmd    command expression
      * @param agName agent name
      * @return HTTP 200 Response (ok status) or 500 Internal Server Error in case of
@@ -313,7 +313,7 @@ public class RestImplAg extends AbstractBinder {
             notes = "Example: curl --request POST 'http://127.0.0.1:8080/agents/marcos/command' "+
                     "--header 'Content-Type: application/x-www-form-urlencoded' --data-urlencode 'c=+raining'"
     )
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
             @ApiResponse(code = 200, message = "success"),
             @ApiResponse(code = 500, message = "internal error")
     })
@@ -330,7 +330,7 @@ public class RestImplAg extends AbstractBinder {
 
     /**
      * Get agent full log as text.
-     * 
+     *
      * @param agName agent name
      * @return HTTP 200 Response (ok status) or 500 Internal Server Error in case of
      *         error (based on https://tools.ietf.org/html/rfc7231#section-6.6.1)
@@ -343,7 +343,7 @@ public class RestImplAg extends AbstractBinder {
             value = "Get agent full log as text.",
             notes = "Example: [06-04-20 20:37:03] Command +raining: {}"
     )
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
             @ApiResponse(code = 200, message = "success"),
             @ApiResponse(code = 500, message = "internal error")
     })
@@ -360,7 +360,7 @@ public class RestImplAg extends AbstractBinder {
 
     /**
      * Append a message on agent's inbox.
-     * 
+     *
      * @param m message
      * @param agName agent name
      * @return HTTP 200 Response (ok status) or 500 Internal Server Error in case of
@@ -374,17 +374,17 @@ public class RestImplAg extends AbstractBinder {
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(
             value = "Append a message on agent's inbox.",
-            notes = "Example: curl --location --request POST 'http://127.0.0.1:8080/agents/marcos/inbox'" + 
-                            " --header 'Content-Type: application/json'" + 
+            notes = "Example: curl --location --request POST 'http://127.0.0.1:8080/agents/marcos/inbox'" +
+                            " --header 'Content-Type: application/json'" +
                             " --data-raw '{\"performative\":\"tell\",\"sender\":\"jomi\",\"receiver\":\"bob\",\"content\":\"vl(10)\",\"msgId\":\"34\"}'"
             )
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
             @ApiResponse(code = 200, message = "success"),
             @ApiResponse(code = 500, message = "internal error")
     })
     public Response postAgentMessage(Message m, @PathParam("agentname") String agName) {
         try {
-            tAg.addMessageToAgentMailbox(m, agName); 
+            tAg.addMessageToAgentMailbox(m, agName);
             return Response
                     .ok()
                     .build();
@@ -393,10 +393,10 @@ public class RestImplAg extends AbstractBinder {
             return Response.status(500, e.getMessage()).build();
         }
     }
-    
+
     /**
      * Get services provided by a given agent.
-     * 
+     *
      * @return HTTP 200 Response (ok status) or 500 Internal Server Error in case of
      *         error (based on https://tools.ietf.org/html/rfc7231#section-6.6.1)
      *         Example: ["supply(banana)","consultant"]
@@ -408,7 +408,7 @@ public class RestImplAg extends AbstractBinder {
             value = "Get services provided by a given agent.",
             notes = "Example: [\"supply(banana)\",\"consultant\"]"
     )
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
             @ApiResponse(code = 200, message = "success"),
             @ApiResponse(code = 500, message = "internal error")
     })
@@ -425,16 +425,16 @@ public class RestImplAg extends AbstractBinder {
             return Response.status(500, e.getMessage()).build();
         }
     }
-    
+
     /**
      * Append a service to the agent.
-     * 
+     *
      * @param agName agent name
      *
      * @param values a map of services (optional)
      * @return HTTP 200 Response (ok status) or 500 Internal Server Error in case of
      *         error (based on https://tools.ietf.org/html/rfc7231#section-6.6.1)
-     *         
+     *
      *         Example: curl --request POST 'http://127.0.0.1:8080/agents/marcos/services/gardening' \
      *         --header 'Content-Type: application/json' \
      *         --data-raw '{"service":"gardening(vegetables)","type":"garden services"}'
@@ -444,22 +444,22 @@ public class RestImplAg extends AbstractBinder {
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(
             value = "Append a service to the agent.",
-            notes = "Example: curl --request POST 'http://127.0.0.1:8080/agents/marcos/services/gardening'" + 
-                            " --header 'Content-Type: application/json'" + 
+            notes = "Example: curl --request POST 'http://127.0.0.1:8080/agents/marcos/services/gardening'" +
+                            " --header 'Content-Type: application/json'" +
                             " --data-raw '{\"service\":\"gardening(vegetables)\",\"type\":\"agent\"}"
     )
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
             @ApiResponse(code = 201, message = "generated uri"),
             @ApiResponse(code = 500, message = "internal error")
     })
     public Response postAgentService(
-            @PathParam("agentname") String agName, 
-            @PathParam("serviceid") String service, 
-            @Context UriInfo uriInfo, 
+            @PathParam("agentname") String agName,
+            @PathParam("serviceid") String service,
+            @Context UriInfo uriInfo,
             Map<String, Object> values) {
         try {
             tAg.addServiceToAgent(agName, service, values);
-            
+
             return Response
                     .created(new URI(uriInfo.getBaseUri() + agName + "/services/" + agName + "/services/" + service))
                     .build();
@@ -471,7 +471,7 @@ public class RestImplAg extends AbstractBinder {
 
     /**
      * Remove a service from the agent.
-     * 
+     *
      * @param agName agent name
      *
      * @return HTTP 200 Response (ok status) or 500 Internal Server Error in case of
@@ -483,12 +483,12 @@ public class RestImplAg extends AbstractBinder {
     @ApiOperation(
             value = "Remove a service from the agent."
     )
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
             @ApiResponse(code = 200, message = "generated uri"),
             @ApiResponse(code = 500, message = "internal error")
     })
     public Response deleteAgentService(
-            @PathParam("agentname") String agName, 
+            @PathParam("agentname") String agName,
             @PathParam("serviceid") String service) {
         try {
             tAg.removeServiceToAgent(agName, service);

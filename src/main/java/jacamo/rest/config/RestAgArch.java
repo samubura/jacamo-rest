@@ -1,4 +1,4 @@
-package jacamo.rest.config;
+package mas.rest.config;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +15,7 @@ import org.apache.curator.x.async.AsyncCuratorFramework;
 
 import com.google.gson.Gson;
 
-import jacamo.rest.JCMRest;
+import mas.rest.JCMRest;
 import jason.ReceiverNotFoundException;
 import jason.architecture.AgArch;
 import jason.asSemantics.Message;
@@ -23,7 +23,7 @@ import jason.asSemantics.Message;
 public class RestAgArch extends AgArch {
 
     private static final long serialVersionUID = 1L;
-    
+
     CuratorFramework      zkClient = null;
     AsyncCuratorFramework zkAsync = null;
 
@@ -42,7 +42,7 @@ public class RestAgArch extends AgArch {
             Map<String,String> md = new HashMap<>();
             md.put("type", "JaCaMoAgent");
             try {
-                registerWP(zkClient, getAgName(), md, true);            
+                registerWP(zkClient, getAgName(), md, true);
             } catch (java.lang.InterruptedException e) {
                 // ignore, system is stopping
             }
@@ -59,7 +59,7 @@ public class RestAgArch extends AgArch {
             String agUri  = md.getOrDefault("uri", JCMRest.getRestHost()+"agents/"+agName);
             zkClient.create()//.withMode(CreateMode.EPHEMERAL)
                 .forPath(agAddr, agUri.getBytes());
-            
+
             // store meta-data
             try {
                 if (addInbox)
@@ -73,7 +73,7 @@ public class RestAgArch extends AgArch {
             return true;
         }
     }
-    
+
     public static void deleteWP(CuratorFramework zkClient, String agName) {
         try {
             zkClient.delete().deletingChildrenIfNeeded()
@@ -92,7 +92,7 @@ public class RestAgArch extends AgArch {
             zkAsync  = AsyncCuratorFramework.wrap(zkClient);
         return zkAsync;
     }
-    
+
     @Override
     public void stop() {
         if (zkClient != null) {
@@ -147,7 +147,7 @@ public class RestAgArch extends AgArch {
                                   .accept(MediaType.TEXT_PLAIN)
                                   .post(
                                         //Entity.xml( new jacamo.rest.Message(m)), String.class);
-                                        Entity.json( new Gson().toJson(new jacamo.rest.util.Message(m))));
+                                        Entity.json( new Gson().toJson(new mas.rest.util.Message(m))));
                     }
                 } else {
                     throw e;

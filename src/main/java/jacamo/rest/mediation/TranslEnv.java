@@ -1,4 +1,4 @@
-package jacamo.rest.mediation;
+package mas.rest.mediation;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,13 +17,13 @@ import cartago.CartagoException;
 import cartago.CartagoService;
 import cartago.Op;
 import cartago.WorkspaceId;
-import jacamo.platform.EnvironmentWebInspector;
+import mas.platform.EnvironmentWebInspector;
 
 public class TranslEnv {
 
     /**
      * Get list of workspaces in JSON format.
-     * 
+     *
      * @return HTTP 200 Response (ok status) or 500 Internal Server Error in case of
      *         error (based on https://tools.ietf.org/html/rfc7231#section-6.6.1)
      *         Sample: ["main","testOrg","testwks","wkstest"]
@@ -35,7 +35,7 @@ public class TranslEnv {
     /**
      * Get details about a workspace, the artifacts that are situated on this
      * including their properties, operations, observers and linked artifacts
-     * 
+     *
      * @param wrksName name of the workspace
      * @return A map with workspace details
      * @throws CartagoException
@@ -56,9 +56,9 @@ public class TranslEnv {
     }
 
     /**
-     * Get details about an artifact 
+     * Get details about an artifact
      * including their properties, operations, observers and linked artifacts
-     * 
+     *
      * @param wrksName name of the workspace
      * @return A map with workspace details
      * @throws CartagoException
@@ -110,7 +110,7 @@ public class TranslEnv {
 
         return artifact;
     }
-    
+
     public void createWorkspace(String wrksName) throws CartagoException {
         if (!CartagoService.getNode().getWorkspaces().contains(wrksName)) {
             CartagoService.createWorkspace(wrksName);
@@ -120,18 +120,18 @@ public class TranslEnv {
             throw new CartagoException("Workspace " + wrksName + " already exists.");
         }
     }
-    
+
     public void createArtefact(String wrksName, String artName, String javaClass, Object[] values) throws CartagoException {
         getContext(wrksName).makeArtifact(getWId(wrksName), artName, javaClass, values);
     }
-    
-    
+
+
     public Object[] getObsPropValue(String wrksName, String artName, String obsPropId) throws CartagoException {
         ArtifactInfo info = CartagoService.getController(wrksName).getArtifactInfo(artName);
         for (ArtifactObsProperty op : info.getObsProperties()) {
             if (op.getName().equals(obsPropId)) {
                 return op.getValues();
-            }           
+            }
         }
         return null;
     }
@@ -146,8 +146,8 @@ public class TranslEnv {
         }
         ctxt.doAction(aid, new Op(operation, values));
     }
-    
-    
+
+
     protected CartagoContext getContext(String wrksName) throws CartagoException {
         CartagoContext ctxt = contexts.get(wrksName);
         if (ctxt == null) {
@@ -157,8 +157,8 @@ public class TranslEnv {
         }
         return ctxt;
     }
-    
+
     protected WorkspaceId getWId(String wrksName) throws CartagoException {
-        return getContext(wrksName).getJoinedWspId(wrksName); 
+        return getContext(wrksName).getJoinedWspId(wrksName);
     }
 }

@@ -1,16 +1,16 @@
-package jacamo.rest.util;
+package mas.rest.util;
 
 public class PostArtifact {
     private String template;
     private Object[] values;
 
     public PostArtifact(){};
-    
+
     public PostArtifact(String template, Object[] values) {
         this.template = template;
         this.values = values;
     }
-    
+
     public String getTemplate() {
         return template;
     }

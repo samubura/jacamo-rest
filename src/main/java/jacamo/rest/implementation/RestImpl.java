@@ -1,4 +1,4 @@
-package jacamo.rest.implementation;
+package mas.rest.implementation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,9 +21,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import jacamo.rest.mediation.TranslAg;
-import jacamo.rest.mediation.TranslEnv;
-import jacamo.rest.mediation.TranslOrg;
+import mas.rest.mediation.TranslAg;
+import mas.rest.mediation.TranslEnv;
+import mas.rest.mediation.TranslOrg;
 
 @Singleton
 @Path("/")
@@ -37,7 +37,7 @@ public class RestImpl extends AbstractBinder {
 
     /**
      * Get MAS overview.
-     * 
+     *
      * @return HTTP 200 Response (ok status) or 500 Internal Server Error in case of
      *         error (based on https://tools.ietf.org/html/rfc7231#section-6.6.1)
      */
@@ -45,7 +45,7 @@ public class RestImpl extends AbstractBinder {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Get MAS overview.")
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
             @ApiResponse(code = 200, message = "success"),
             @ApiResponse(code = 500, message = "internal error")
     })

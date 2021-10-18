@@ -1,4 +1,4 @@
-package jacamo.rest.mediation;
+package mas.rest.mediation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ public class TranslOrg {
 
     /**
      * Get list of running organisations.
-     * 
+     *
      * @return List of strings
      */
     public List<String> getOrganisations() {
@@ -42,7 +42,7 @@ public class TranslOrg {
     /**
      * Get details of one organisation in JSON format, including groups, schemes and
      * norms.
-     * 
+     *
      * @param oeName name of the organisation
      * @return A map with organisation data
      */
@@ -200,7 +200,7 @@ public class TranslOrg {
 
     /**
      * Add goals recursively in a list of string in a format sub-goal <- parent-goal
-     * 
+     *
      * @param sb   scheme board where goals are assigned
      * @param g    usually the first given is the root goal
      * @param p    the parent of the given goal (null for root)
@@ -230,10 +230,10 @@ public class TranslOrg {
         }
         return list;
     }
-    
+
     /**
      * create a role in the given organisation
-     * 
+     *
      * @param oeName
      * @param role
      * @throws MoiseConsistencyException

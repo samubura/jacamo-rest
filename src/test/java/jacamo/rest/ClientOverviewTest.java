@@ -1,4 +1,4 @@
-package jacamo.rest;
+package mas.rest;
 
 import static org.junit.Assert.assertTrue;
 
@@ -30,15 +30,15 @@ public class ClientOverviewTest {
         System.out.println("\n\test401GetOverview");
         Response response;
         String rStr;
-        
+
         // Testing ok from root URI
         response = client.target(uri.toString()).path("overview/")
                 .request(MediaType.APPLICATION_JSON).get();
-        rStr = response.readEntity(String.class).toString(); 
+        rStr = response.readEntity(String.class).toString();
         System.out.println("Response (overview/): " + rStr);
         assertTrue(rStr.contains("cartago.NodeArtifact"));
-        
+
         client.close();
     }
-    
+
 }

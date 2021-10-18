@@ -1,4 +1,4 @@
-package jacamo.rest.mediation;
+package mas.rest.mediation;
 
 import java.io.StringReader;
 import java.text.SimpleDateFormat;
@@ -26,9 +26,9 @@ import cartago.CartagoException;
 import cartago.CartagoService;
 import cartago.WorkspaceId;
 import jaca.CAgentArch;
-import jacamo.rest.JCMRest;
-import jacamo.rest.config.RestAgArch;
-import jacamo.rest.util.Message;
+import mas.rest.JCMRest;
+import mas.rest.config.RestAgArch;
+import mas.rest.util.Message;
 import jason.JasonException;
 import jason.ReceiverNotFoundException;
 import jason.architecture.AgArch;
@@ -61,14 +61,14 @@ public class TranslAg {
     Executor executor = Executors.newFixedThreadPool(4);
 
     /**
-     * Get existing agents  
-     * 
+     * Get existing agents
+     *
      * @return Set of agents;
      */
     public Map<String,Map<String,String>> getAgents() {
         // read all data from ZK
         try {
-            return JCMRest.getWP();            
+            return JCMRest.getWP();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,7 +79,7 @@ public class TranslAg {
      * Create agent with the given name if available (otherwise name_1...)
      * If type is null an empty agent that prints Hello! is instantiated
      *
-     * 
+     *
      * @param agName the requested name for the agent
      * @param type the name of the agent source file
      * @return the assigned name of the newly created agent
@@ -107,19 +107,19 @@ public class TranslAg {
 
         return givenName;
     }
-    
-    
+
+
     /**
      * Creates a new entry in the WP
-     * @throws Exception 
+     * @throws Exception
      */
-    public boolean createWP(String agName, Map<String,String> metaData) throws Exception {     
-        return RestAgArch.registerWP(JCMRest.getZKClient(), agName, metaData, false);      
+    public boolean createWP(String agName, Map<String,String> metaData) throws Exception {
+        return RestAgArch.registerWP(JCMRest.getZKClient(), agName, metaData, false);
     }
-    
+
     /**
      * ask to agent to run a command
-     *  
+     *
      * @param cmd
      * @param agName
      * @return
@@ -146,10 +146,10 @@ public class TranslAg {
         }
         return um;
     }
-    
+
     /**
      * Creates a log area for an agent
-     * 
+     *
      * @param agName agent name
      * @param ag     agent object
      */
@@ -165,10 +165,10 @@ public class TranslAg {
             });
         }
     }
-    
+
     /**
      * Add a message to the agent log.
-     * 
+     *
      * @param agName agent name
      * @param msg    message to be added
      */
@@ -183,12 +183,12 @@ public class TranslAg {
         String dt = new SimpleDateFormat("dd-MM-yy HH:mm:ss").format(new Date());
         o.append("[" + dt + "] " + msg);
     }
-    
+
     /**
      * kill an agent
      * @param agName
      * @return
-     * @throws Exception 
+     * @throws Exception
      */
     public void deleteAgent(String agName) throws Exception {
         if (BaseCentralisedMAS.getRunner().getAg(agName) != null) {
@@ -197,7 +197,7 @@ public class TranslAg {
         }
         RestAgArch.deleteWP(JCMRest.getZKClient(), agName);
     }
-    
+
     /**
      * Return status of the agent
      * @param agName
@@ -211,10 +211,10 @@ public class TranslAg {
 
         return ag.getTS().getAgArch().getStatus();
     }
-    
+
     /**
      * get Agent Belief Base
-     * 
+     *
      * @param agName
      * @return
      */
@@ -226,10 +226,10 @@ public class TranslAg {
         }
         return bbs;
     }
-    
+
     /**
      * List of plans
-     * 
+     *
      * @param agName name of the agent
      * @param label optional filter
      * @return list of string
@@ -251,10 +251,10 @@ public class TranslAg {
         }
         return plans;
     }
-    
+
     /**
      * Add a plan to the agent's plan library
-     * 
+     *
      * @param agName
      * @param plans
      * @throws Exception
@@ -266,14 +266,14 @@ public class TranslAg {
         }
         ag.parseAS(new StringReader(plans), "RestAPI");
     }
-    
+
     /**
      * Get agent information (namespaces, roles, missions and workspaces)
-     * 
+     *
      * @param agName name of the agent
      * @return A Map with agent information
      * @throws CartagoException
-     * 
+     *
      */
     public Map<String, Object> getAgentDetails(String agName) throws Exception {
 
@@ -352,7 +352,7 @@ public class TranslAg {
                 e.printStackTrace();
             }
         });
-        
+
         List<String> beliefs = getAgentsBB(agName);
 
         Map<String, Object> agent = new HashMap<>();
@@ -368,11 +368,11 @@ public class TranslAg {
 
     /**
      * Send a command to an agent
-     * 
+     *
      * @param ag name of the agent
      * @param lCmd   command to be executed
      * @return Status message
-     * @throws ParseException 
+     * @throws ParseException
      */
     @SuppressWarnings("serial")
     Unifier execCmd(Agent ag, PlanBody lCmd) throws ParseException {
@@ -384,7 +384,7 @@ public class TranslAg {
         Lock lock = new ReentrantLock();
         Condition goalFinished  = lock.newCondition();
         executor.execute( () -> {
-                /*GoalListener gl = new GoalListener() {                 
+                /*GoalListener gl = new GoalListener() {
                     public void goalSuspended(Trigger goal, String reason) {}
                     public void goalStarted(Event goal) {}
                     public void goalResumed(Trigger goal) {}
@@ -393,14 +393,14 @@ public class TranslAg {
                         if (goal.equals(te)) {
                             // finished
                             //if (result.equals(FinishStates.achieved)) {
-                            //}                           
+                            //}
                             try {
                                 lock.lock();
                                 goalFinished.signalAll();
                             } finally {
                                 lock.unlock();
                             }
-                        }                       
+                        }
                     }
                     public void goalFailed(Trigger goal) {
                         if (goal.equals(te)) {
@@ -410,7 +410,7 @@ public class TranslAg {
                             } finally {
                                 lock.unlock();
                             }
-                        }                                                   
+                        }
                     }
                 };*/
                 CircumstanceListener cl = new CircumstanceListener() {
@@ -437,15 +437,15 @@ public class TranslAg {
                     goalFinished.await();
                     //ts.removeGoalListener(gl);
                     ts.getC().removeEventListener(cl);
-                } catch (InterruptedException e) {                          
+                } catch (InterruptedException e) {
                 } finally {
                     lock.unlock();
-                }                
+                }
         });
         try {
             lock.lock();
             goalFinished.await();
-            
+
             return im.getUnif();
         } catch (InterruptedException e) {
         } finally {
@@ -453,10 +453,10 @@ public class TranslAg {
         }
         return null;
     }
-    
+
     /**
      * get agent log
-     * 
+     *
      * @param agName
      * @throws Exception
      */
@@ -467,10 +467,10 @@ public class TranslAg {
             return "Log is empty/absent.";
         }
     }
-    
+
     /**
      * Return agent object by agent's name
-     * 
+     *
      * @param agName name of the agent
      * @return Agent object
      */
@@ -484,7 +484,7 @@ public class TranslAg {
 
     /**
      * Get agent's CArtAgO architecture
-     * 
+     *
      * @param ag Agent object
      * @return agent's CArtAgO architecture
      */
@@ -498,10 +498,10 @@ public class TranslAg {
         }
         return null;
     }
-    
+
     /**
      * add a message to the agent's mailbox
-     * 
+     *
      * @param m
      * @param agName
      * @throws Exception
@@ -514,10 +514,10 @@ public class TranslAg {
             throw new Exception("Internal Server Error! Receiver '" + agName + "' not found");
         }
     }
-    
+
     /**
      * Returns agents by services
-     * 
+     *
      * @return
      * @throws Exception
      */
@@ -527,7 +527,7 @@ public class TranslAg {
 
     /**
      * Return content of getCommonDF but ready to send to the client (in Json format)
-     * 
+     *
      * @return
      * @throws Exception
      */
@@ -546,10 +546,10 @@ public class TranslAg {
         }
         return jsonifiedDF;
     }
-    
+
     /**
      * Add a service to a given agent
-     * 
+     *
      * @param agName
      * @param values
      * @throws Exception
@@ -566,7 +566,7 @@ public class TranslAg {
 
     /**
      * Remove a service from a given agent
-     * 
+     *
      * @param agName
      * @param service
      * @throws Exception

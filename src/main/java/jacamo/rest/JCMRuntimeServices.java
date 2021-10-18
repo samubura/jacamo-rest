@@ -1,4 +1,4 @@
-package jacamo.rest;
+package mas.rest;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,7 +11,7 @@ import java.util.Set;
 import org.apache.curator.x.async.WatchMode;
 import org.apache.zookeeper.CreateMode;
 
-import jacamo.rest.config.RestAgArch;
+import mas.rest.config.RestAgArch;
 import jason.architecture.AgArch;
 import jason.asSemantics.Unifier;
 import jason.asSyntax.ASSyntax;
@@ -25,7 +25,7 @@ import jason.runtime.DelegatedRuntimeServices;
 import jason.runtime.RuntimeServicesFactory;
 
 public class JCMRuntimeServices extends DelegatedRuntimeServices {
-    
+
     public JCMRuntimeServices() {
         super(RuntimeServicesFactory.get());
     }
@@ -44,7 +44,7 @@ public class JCMRuntimeServices extends DelegatedRuntimeServices {
             e.printStackTrace();
         }
     }
-    
+
     @Override
     public void dfDeRegister(String agName, String service, String type) {
         try {
@@ -53,7 +53,7 @@ public class JCMRuntimeServices extends DelegatedRuntimeServices {
             e.printStackTrace();
         }
     }
-    
+
     @Override
     public Collection<String> dfSearch(String service, String type) {
         Set<String> ags = new HashSet<>();
@@ -68,11 +68,11 @@ public class JCMRuntimeServices extends DelegatedRuntimeServices {
         }
         return ags;
     }
-    
+
     @Override
     public void dfSubscribe(String agName, String service, String type) {
         try {
-            RestAgArch arch = getRestAgArch(agName); 
+            RestAgArch arch = getRestAgArch(agName);
             arch.getAsyncCurator()
                 .with(WatchMode.successOnly).watched().getChildren().forPath(JCMRest.JaCaMoZKDFNodeId+"/"+service).event().thenAccept(event -> {
                     try {
@@ -98,8 +98,8 @@ public class JCMRuntimeServices extends DelegatedRuntimeServices {
             e.printStackTrace();
         }
     }
-    
-    
+
+
     @Override
     public Collection<String> getAgentsNames() {
         // use ZK WP
@@ -114,7 +114,7 @@ public class JCMRuntimeServices extends DelegatedRuntimeServices {
             return super.getAgentsNames();
         }
     }
-    
+
     @Override
     public Map<String, Set<String>> getDF() {
         if (JCMRest.getZKHost() == null) {
@@ -134,10 +134,10 @@ public class JCMRuntimeServices extends DelegatedRuntimeServices {
                 return null;
             }
         }
-    }  
-    
+    }
+
     Map<String, RestAgArch> archCache = new HashMap<>();
-    
+
     protected RestAgArch getRestAgArch(String agName) {
         return archCache.computeIfAbsent(agName, k -> {
             AgArch arch = BaseCentralisedMAS.getRunner().getAg(agName).getFirstAgArch();

@@ -1,4 +1,4 @@
-package jacamo.rest.util;
+package mas.rest.util;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -18,11 +18,11 @@ import jason.asSyntax.ASSyntax;
 import jason.asSyntax.Term;
 
 public class DummyArt extends Artifact {
-    
+
     protected transient Logger logger  = Logger.getLogger(DummyArt.class.getName());
 
     private URL actionTarger = null;
-    
+
     public void init() {
     }
 
@@ -30,7 +30,7 @@ public class DummyArt extends Artifact {
         defineObsProperty(obName, arg);
         logger.log(Level.FINE,"new ob "+obName+"("+arg+")");
     }
-    
+
     @OPERATION public void doUpdateObsProperty(String obName, Object arg) {
         ObsProperty op = getObsProperty(obName);
         if (op == null) {
@@ -50,7 +50,7 @@ public class DummyArt extends Artifact {
             logger.log(Level.FINE, "signal "+signal+"("+arg+")");
         }
     }
-    
+
     @OPERATION public void register(String url) {
         try {
             actionTarger = new URL(url);
@@ -60,10 +60,10 @@ public class DummyArt extends Artifact {
             failed("error creating URL: "+e.getMessage());
         }
     }
-    
+
     @OPERATION public void act(String act, OpFeedbackParam<Term> res) {
         if (actionTarger == null) {
-            failed("no URL registered for actions!");           
+            failed("no URL registered for actions!");
         } else {
             String nact = act;
             try {
@@ -73,16 +73,16 @@ public class DummyArt extends Artifact {
                 // ignore parsing error, use string format
                 if (!nact.startsWith("\""))
                 	nact = "\"" + act+ "\"";
-            } 
+            }
             logger.log(Level.FINE, getCurrentOpAgentId().getAgentName()+" doing "+act+" at "+actionTarger+" as JSON: "+nact);
-            
+
             try {
             	// send request
                 Client client = ClientBuilder.newClient();
                 Response response = client.target(actionTarger.toString())
                     .request()
                     .post(Entity.json( nact ));
-                
+
                 // process answer
                 String ans = response.readEntity(String.class);
                 Term   ansj = null;
@@ -96,7 +96,7 @@ public class DummyArt extends Artifact {
                     }
                 } else {
                     // store answer as string
-                	if (ans.startsWith("\"") && ans.endsWith("\"")) 
+                	if (ans.startsWith("\"") && ans.endsWith("\""))
                 		ans = ans.substring(1,ans.length()-1);
                 	ansj = ASSyntax.createString(ans);
                     res.set(ansj);
@@ -104,7 +104,7 @@ public class DummyArt extends Artifact {
                 logger.log(Level.FINE, getCurrentOpAgentId().getAgentName()+" answer "+ans+" "+response.getMediaType()+" as jason "+ansj);
                 client.close();
             } catch (Exception e) {
-                logger.log(Level.SEVERE, "error in act", e); 
+                logger.log(Level.SEVERE, "error in act", e);
                 failed("Error to send "+act+" to "+actionTarger);
             }
         }

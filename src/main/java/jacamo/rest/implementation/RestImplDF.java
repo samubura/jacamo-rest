@@ -1,4 +1,4 @@
-package jacamo.rest.implementation;
+package mas.rest.implementation;
 
 import javax.inject.Singleton;
 import javax.ws.rs.GET;
@@ -15,7 +15,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import jacamo.rest.mediation.TranslAg;
+import mas.rest.mediation.TranslAg;
 
 @Singleton
 @Path("/services")
@@ -23,7 +23,7 @@ import jacamo.rest.mediation.TranslAg;
 public class RestImplDF extends AbstractBinder {
 
     TranslAg tAg = new TranslAg();
-    
+
     @Override
     protected void configure() {
         bind(new RestImplDF()).to(RestImplDF.class);
@@ -31,11 +31,11 @@ public class RestImplDF extends AbstractBinder {
 
     /**
      * Get MAS Directory Facilitator (agents and services).
-     * 
+     *
      * Following the format suggested in the second example of
      * https://opensource.adobe.com/Spry/samples/data_region/JSONDataSetSample.html
      * We are providing lists of maps
-     * 
+     *
      * @return HTTP 200 Response (ok status) or 500 Internal Server Error in case of
      *         error (based on https://tools.ietf.org/html/rfc7231#section-6.6.1)
      *         when ok JSON of the DF Sample output (jsonifiedDF):
@@ -45,7 +45,7 @@ public class RestImplDF extends AbstractBinder {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Get MAS Directory Facilitator (agents and services).")
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
             @ApiResponse(code = 200, message = "success"),
             @ApiResponse(code = 500, message = "internal error")
     })
