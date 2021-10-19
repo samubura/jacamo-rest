@@ -89,18 +89,19 @@ public class TranslAg {
     public String createAgent(String agName, String type) throws Exception, JasonException {
         //TODO SAMU modified to accept the type
         if(type == null){
-            type = "empty.asl";
+            type = "empty";
         }
-        String givenName = RuntimeServicesFactory.get().createAgent(agName, type,  null, null, null, null, null);
+        String givenName = RuntimeServicesFactory.get().createAgent(agName, type+".asl",  null, null, null, null, null);
         RuntimeServicesFactory.get().startAgent(givenName);
 
         Agent ag = getAgent(givenName);
 
-        //includes default stuff for agents
+        /* not needed since the template file should include them
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("{ include(\"$jacamoJar/templates/common-cartago.asl\") }\n");
         stringBuilder.append("{ include(\"$jacamoJar/templates/common-moise.asl\") }\n");
         ag.load(new StringInputStream( stringBuilder.toString()), "source-from-rest-api");
+         */
 
         //agentLog created
         createAgLog(givenName, ag);

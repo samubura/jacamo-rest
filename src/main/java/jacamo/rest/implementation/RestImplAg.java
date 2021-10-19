@@ -81,11 +81,11 @@ public class RestImplAg extends AbstractBinder {
     }
 
     /**
-     * Create an Agent. Produces PLAIN TEXT with HTTP response for this operation. If
-     * an ASL file with the given name exists, it will launch an agent with existing
-     * code. Otherwise, creates an agent that will start say 'Hi'.
-     *
+     * Creates an agent with the given name if available otherwise a name like "name_1"
+     * If the type parameter is specified in the queryString and an .asl file exist with the same name
+     * creates an agent with that name, otherwise an empty agent that says "Hello!".
      * @param agName name of the agent to be created
+     * @param type the name of the .asl file to use as a template
      * @return HTTP 201 Response (created) or 500 Internal Server Error in case of
      *         error (based on https://tools.ietf.org/html/rfc7231#section-6.6.1)
      */
