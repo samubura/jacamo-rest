@@ -102,7 +102,7 @@ public class RestImplAg extends AbstractBinder {
             @PathParam("agentname") String agName,
             @DefaultValue("false") @QueryParam("only_wp") boolean onlyWP,
             //TODO SAMU modified parameter
-            @DefaultValue("null") @QueryParam("type") String type,
+            @DefaultValue("empty") @QueryParam("type") String type,
             Map<String,String> metaData,
             @Context UriInfo uriInfo) {
         try {
