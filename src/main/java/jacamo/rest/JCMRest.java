@@ -1,4 +1,4 @@
-package mas.rest;
+package jacamo.rest;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,9 +29,9 @@ import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 
 import com.google.gson.Gson;
 
-import mas.platform.DefaultPlatformImpl;
-import mas.rest.config.RestAgArch;
-import mas.rest.config.RestAppConfig;
+import jacamo.platform.DefaultPlatformImpl;
+import jacamo.rest.config.RestAgArch;
+import jacamo.rest.config.RestAppConfig;
 import jason.runtime.RuntimeServicesFactory;
 
 

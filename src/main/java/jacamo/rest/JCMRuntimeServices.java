@@ -1,4 +1,4 @@
-package mas.rest;
+package jacamo.rest;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,7 +11,7 @@ import java.util.Set;
 import org.apache.curator.x.async.WatchMode;
 import org.apache.zookeeper.CreateMode;
 
-import mas.rest.config.RestAgArch;
+import jacamo.rest.config.RestAgArch;
 import jason.architecture.AgArch;
 import jason.asSemantics.Unifier;
 import jason.asSyntax.ASSyntax;
