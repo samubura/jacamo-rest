@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Map;
 
 import javax.inject.Singleton;
+import javax.json.JsonObjectBuilder;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
@@ -19,6 +20,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.glassfish.jersey.internal.inject.AbstractBinder;
 
 import com.google.gson.Gson;
@@ -82,10 +86,9 @@ public class RestImplAg extends AbstractBinder {
 
     /**
      * Creates an agent with the given name if available otherwise a name like "name_1"
-     * If the type parameter is specified in the queryString and an .asl file exist with the same name
+     * Accept a json object specifing the type of the agent  if a "type.asl" file exists
      * creates an agent with that name, otherwise an empty agent that says "Hello!".
      * @param agName name of the agent to be created
-     * @param type the name of the .asl file to use as a template
      * @return HTTP 201 Response (created) or 500 Internal Server Error in case of
      *         error (based on https://tools.ietf.org/html/rfc7231#section-6.6.1)
      */
@@ -100,22 +103,15 @@ public class RestImplAg extends AbstractBinder {
     })
     public Response postAgent(
             @PathParam("agentname") String agName,
-            @DefaultValue("false") @QueryParam("only_wp") boolean onlyWP,
-            //TODO SAMU modified parameter
-            @DefaultValue("empty") @QueryParam("type") String type,
-            Map<String,String> metaData,
+            String agent,
             @Context UriInfo uriInfo) {
         try {
-            if (onlyWP) {
-                if (tAg.createWP(agName, metaData))
-                    return Response.created(new URI(uriInfo.getBaseUri() + "agents/" + agName)).build();
-                else
-                    return Response.status(500, "Agent "+agName+" already exists!").build();
-            } else {
-                return Response
-                        .created(new URI(uriInfo.getBaseUri() + "agents/" + tAg.createAgent(agName, type)))
-                        .build();
-            }
+
+            JsonElement typeElem = new JsonParser().parse(agent).getAsJsonObject().get("type");
+            String type = typeElem != null ? typeElem.getAsString() : "empty";
+            return Response
+                    .created(new URI(uriInfo.getBaseUri() + "agents/" + tAg.createAgent(agName, type)))
+                    .build();
         } catch (Exception e) {
             e.printStackTrace();
             return Response.status(500, e.getMessage()).build();
