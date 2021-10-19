@@ -9,5 +9,5 @@
 @hello
 +!start : true <- .print("Hello!").
 
-{ include(\"$jacamoJar/templates/common-cartago.asl\") }
-{ include(\"$jacamoJar/templates/common-moise.asl\") }
+{ include("$jacamoJar/templates/common-cartago.asl") }
+{ include("$jacamoJar/templates/common-moise.asl") }
