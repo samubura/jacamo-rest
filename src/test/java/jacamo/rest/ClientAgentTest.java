@@ -1,4 +1,4 @@
-package mas.rest;
+package jacamo.rest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -24,7 +24,7 @@ import org.junit.runners.MethodSorters;
 
 import com.google.gson.Gson;
 
-import mas.rest.util.Message;
+import jacamo.rest.util.Message;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClientAgentTest {

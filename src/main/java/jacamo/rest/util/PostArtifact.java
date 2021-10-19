@@ -1,4 +1,4 @@
-package mas.rest.util;
+package jacamo.rest.util;
 
 public class PostArtifact {
     private String template;

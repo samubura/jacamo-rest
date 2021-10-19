@@ -1,10 +1,10 @@
-package mas.rest;
+package jacamo.rest;
 
 import java.net.URI;
 
 import javax.ws.rs.core.UriBuilder;
 
-public class RestTestUtils extends mas.util.TestUtils {
+public class RestTestUtils extends jacamo.util.TestUtils {
     protected static URI uri = null;
 
     public static URI launchRestSystem(String jcm) {

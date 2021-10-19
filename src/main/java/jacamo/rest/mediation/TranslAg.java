@@ -1,4 +1,4 @@
-package mas.rest.mediation;
+package jacamo.rest.mediation;
 
 import java.io.StringReader;
 import java.text.SimpleDateFormat;
@@ -18,17 +18,15 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.LogRecord;
 import java.util.logging.StreamHandler;
 
-import org.apache.tools.ant.filters.StringInputStream;
-
 import cartago.ArtifactId;
 import cartago.ArtifactInfo;
 import cartago.CartagoException;
 import cartago.CartagoService;
 import cartago.WorkspaceId;
 import jaca.CAgentArch;
-import mas.rest.JCMRest;
-import mas.rest.config.RestAgArch;
-import mas.rest.util.Message;
+import jacamo.rest.JCMRest;
+import jacamo.rest.config.RestAgArch;
+import jacamo.rest.util.Message;
 import jason.JasonException;
 import jason.ReceiverNotFoundException;
 import jason.architecture.AgArch;

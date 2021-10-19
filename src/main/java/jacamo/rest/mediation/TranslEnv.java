@@ -1,4 +1,4 @@
-package mas.rest.mediation;
+package jacamo.rest.mediation;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,7 +17,7 @@ import cartago.CartagoException;
 import cartago.CartagoService;
 import cartago.Op;
 import cartago.WorkspaceId;
-import mas.platform.EnvironmentWebInspector;
+import jacamo.platform.EnvironmentWebInspector;
 
 public class TranslEnv {
 

@@ -1,4 +1,4 @@
-package mas.rest.util;
+package jacamo.rest.util;
 
 import java.net.MalformedURLException;
 import java.net.URL;

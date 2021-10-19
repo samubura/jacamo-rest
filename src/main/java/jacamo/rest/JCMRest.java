@@ -7,7 +7,6 @@ import java.net.InetSocketAddress;
 import java.net.URI;
 import java.nio.file.Files;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 import javax.ws.rs.core.UriBuilder;

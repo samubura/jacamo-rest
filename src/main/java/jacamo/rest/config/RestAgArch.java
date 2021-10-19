@@ -1,4 +1,4 @@
-package mas.rest.config;
+package jacamo.rest.config;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +8,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 
+import jacamo.rest.JCMRest;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
@@ -15,7 +16,6 @@ import org.apache.curator.x.async.AsyncCuratorFramework;
 
 import com.google.gson.Gson;
 
-import mas.rest.JCMRest;
 import jason.ReceiverNotFoundException;
 import jason.architecture.AgArch;
 import jason.asSemantics.Message;
@@ -147,7 +147,7 @@ public class RestAgArch extends AgArch {
                                   .accept(MediaType.TEXT_PLAIN)
                                   .post(
                                         //Entity.xml( new jacamo.rest.Message(m)), String.class);
-                                        Entity.json( new Gson().toJson(new mas.rest.util.Message(m))));
+                                        Entity.json( new Gson().toJson(new jacamo.rest.util.Message(m))));
                     }
                 } else {
                     throw e;

@@ -1,4 +1,4 @@
-package mas.rest.implementation;
+package jacamo.rest.implementation;
 
 import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
@@ -18,7 +18,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import mas.rest.mediation.TranslOrg;
+import jacamo.rest.mediation.TranslOrg;
 
 @Singleton
 @Path("/organisations")
@@ -105,7 +105,7 @@ public class RestImplOrg extends AbstractBinder {
      *
      * @param oeName name of the organisation
      * @param groupName name of the group
-     * @param role name of the new role
+     *  name of the new role
      * @return HTTP 200 Response (ok status) or 500 Internal Server Error in case of
      *         error (based on https://tools.ietf.org/html/rfc7231#section-6.6.1)
      */

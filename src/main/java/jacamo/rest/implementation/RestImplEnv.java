@@ -1,4 +1,4 @@
-package mas.rest.implementation;
+package jacamo.rest.implementation;
 
 import java.net.URI;
 
@@ -23,8 +23,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import mas.rest.mediation.TranslEnv;
-import mas.rest.util.PostArtifact;
+import jacamo.rest.mediation.TranslEnv;
+import jacamo.rest.util.PostArtifact;
 
 @Singleton
 @Path("/workspaces")

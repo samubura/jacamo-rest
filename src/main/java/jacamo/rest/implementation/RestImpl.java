@@ -1,4 +1,4 @@
-package mas.rest.implementation;
+package jacamo.rest.implementation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import jacamo.rest.mediation.TranslAg;
 import org.glassfish.jersey.internal.inject.AbstractBinder;
 
 import com.google.gson.Gson;
@@ -21,9 +22,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import mas.rest.mediation.TranslAg;
-import mas.rest.mediation.TranslEnv;
-import mas.rest.mediation.TranslOrg;
+import jacamo.rest.mediation.TranslEnv;
+import jacamo.rest.mediation.TranslOrg;
 
 @Singleton
 @Path("/")

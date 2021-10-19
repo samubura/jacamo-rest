@@ -1,4 +1,4 @@
-package mas.rest.implementation;
+package jacamo.rest.implementation;
 
 import java.net.URI;
 import java.util.Map;
@@ -27,8 +27,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import mas.rest.mediation.TranslAg;
-import mas.rest.util.Message;
+import jacamo.rest.mediation.TranslAg;
+import jacamo.rest.util.Message;
 import jason.ReceiverNotFoundException;
 
 /**

@@ -1,4 +1,4 @@
-package mas.rest.mediation;
+package jacamo.rest.mediation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
