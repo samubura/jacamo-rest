@@ -4,6 +4,6 @@
 
 mas default {
     agent default : empty.asl
-    platform: jacamo.rest.JCMRest("--main 2181 --restPort 9000") // starts platform on port 2181
+    platform: jacamo.rest.JCMRest("--main 2181 --restPort 34567") // starts platform on port 2181
 
 }

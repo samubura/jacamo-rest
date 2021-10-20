@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import javax.ws.rs.ApplicationPath;
 
+import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.message.DeflateEncoder;
 import org.glassfish.jersey.message.GZipEncoder;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -25,6 +26,9 @@ public class RestAppConfig extends ResourceConfig {
                 RestImplEnv.class,
                 RestImplOrg.class,
                 RestImplDF.class);
+
+        property(LoggingFeature.LOGGING_FEATURE_LOGGER_LEVEL, "FINE");
+        property(LoggingFeature.LOGGING_FEATURE_LOGGER_NAME, "SERVER");
 
         // gzip compression
         registerClasses(EncodingFilter.class, GZipEncoder.class, DeflateEncoder.class);

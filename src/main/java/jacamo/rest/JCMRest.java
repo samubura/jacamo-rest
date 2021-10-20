@@ -204,7 +204,7 @@ public class JCMRest extends DefaultPlatformImpl {
             return null;
         }
         try {
-            restServerURI = UriBuilder.fromUri("http://"+InetAddress.getLocalHost().getHostAddress()+"/").port(port).build();
+            restServerURI = UriBuilder.fromUri("http://"+"localhost"+"/").port(port).build();
 
             RestAppConfig rc = new RestAppConfig();
 

@@ -1,32 +1,8 @@
 package jacamo.rest.implementation;
 
-import java.net.URI;
-import java.util.Map;
-
-import javax.inject.Singleton;
-import javax.json.JsonObjectBuilder;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.DefaultValue;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import org.glassfish.jersey.internal.inject.AbstractBinder;
-
 import com.google.gson.Gson;
-
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -34,6 +10,16 @@ import io.swagger.annotations.ApiResponses;
 import jacamo.rest.mediation.TranslAg;
 import jacamo.rest.util.Message;
 import jason.ReceiverNotFoundException;
+import org.glassfish.jersey.internal.inject.AbstractBinder;
+
+import javax.inject.Singleton;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
+import java.util.Map;
 
 /**
  * Agent's REST compile class
@@ -95,7 +81,6 @@ public class RestImplAg extends AbstractBinder {
     @Path("/{agentname}")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_PLAIN)
     @ApiOperation(value = "Create an Agent.")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "generated uri"),
@@ -106,7 +91,6 @@ public class RestImplAg extends AbstractBinder {
             String agent,
             @Context UriInfo uriInfo) {
         try {
-
             JsonElement typeElem = new JsonParser().parse(agent).getAsJsonObject().get("type");
             String type = typeElem != null ? typeElem.getAsString() : "empty";
             return Response
