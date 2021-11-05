@@ -68,6 +68,9 @@ dependencies {
 	// https://mvnrepository.com/artifact/io.swagger/swagger-annotations
 	compile 'io.swagger:swagger-annotations:1.6.1'
 
+    //ADDED FOR ARTIFACTS
+    compile 'org.apache.httpcomponents:httpclient:4.5.13'
+
 	// https://mvnrepository.com/artifact/junit/junit
 	testCompile group: 'junit', name: 'junit', version: '4.12'
 }
