@@ -82,6 +82,7 @@ sourceSets {
             srcDir 'src/agt'
             srcDir 'src/org'
             srcDir 'src/main/java'
+            srcDir 'src/libs'
         }
         resources {
             srcDir 'src/resources'

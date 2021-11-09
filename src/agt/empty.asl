@@ -2,12 +2,16 @@
 
 /* Initial goals */
 
-!start.
+!start(4).
 
 /* Plans */
 
 @hello
-+!start : true <- .print("Hello!").
++!start(T) : true
+<-  json.parse("{'key': 1}",J);
+    json.set(J, "key", "x");
+    json.print(J).
+
 
 { include("$jacamoJar/templates/common-cartago.asl") }
 { include("$jacamoJar/templates/common-moise.asl") }
