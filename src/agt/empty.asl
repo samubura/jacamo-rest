@@ -8,9 +8,10 @@
 
 @hello
 +!start(T) : true
-<-  json.parse("{'key': 1}",J);
-    json.set(J, "key", "x");
-    json.print(J).
+<-  makeArtifact("client","wot.WotHttpClientArtifact",[],C);
+    json.parse("{'color':'#ff0000'}", I);
+    invokeAction("http://localhost:3000/affordances/smart-room/lamp-1/color", I, O) [artifact_id(C)];
+    json.print(I).
 
 
 { include("$jacamoJar/templates/common-cartago.asl") }

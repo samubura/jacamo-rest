@@ -9,7 +9,7 @@ import wot.java.*;
  * Use should be to instantiate an artifact for each thing that the agent wants to use.
  * The artifact should be used by a single agent and the id remembered as a mental note that can be retrieved with a test goal.
  */
-public class WoTHttpClientArtifact extends Artifact{
+public class WotHttpClientArtifact extends Artifact{
 
     private WotHttpClient client;
 
