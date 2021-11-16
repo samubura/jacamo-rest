@@ -34,7 +34,7 @@ public class parse extends AbstractInternalAction {
 
     @Override
     protected Object action(TransitionSystem ts, Unifier un, Term[] args) throws JasonException {
-
+        checkArguments(args);
         JsonElement element = null;
 
         if(args[0].isAtom()){

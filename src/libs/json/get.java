@@ -39,6 +39,7 @@ public class get extends AbstractInternalAction {
 
     @Override
     protected Object action(TransitionSystem ts, Unifier un, Term[] args) throws JasonException {
+        checkArguments(args);
         Term feedbackParam = args[args.length-1];
         JsonElement json = (JsonElement)((ObjectTerm)args[0]).getObject();
         String type = null;

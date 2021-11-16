@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
 import com.google.gson.JsonObject;
+import jason.JasonException;
 import jason.asSemantics.InternalAction;
 import jason.asSemantics.TransitionSystem;
 import jason.asSemantics.Unifier;
@@ -38,7 +39,8 @@ public class create_empty_array extends AbstractInternalAction {
     }
 
     @Override
-    protected Object action(TransitionSystem ts, Unifier un, Term[] args) {
+    protected Object action(TransitionSystem ts, Unifier un, Term[] args) throws JasonException {
+        checkArguments(args);
         JsonElement object = new JsonArray();
         ObjectTerm result = new ObjectTermImpl(object);
         return un.unifies(result, args[0]);

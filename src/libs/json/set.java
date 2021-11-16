@@ -33,6 +33,7 @@ public class set extends AbstractInternalAction {
 
     @Override
     protected Object action(TransitionSystem ts, Unifier un, Term[] args) throws JasonException {
+        checkArguments(args);
         if(args[1].isString()){
             this.setObjectField((ObjectTerm)args[0], (StringTerm)args[1], args[2]);
         } else if(args[1].isNumeric()){

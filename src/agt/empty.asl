@@ -9,9 +9,10 @@
 @hello
 +!start(T) : true
 <-  makeArtifact("client","wot.WotHttpClientArtifact",[],C);
-    json.parse("{'color':'#ff0000'}", I);
-    invokeAction("http://localhost:3000/affordances/smart-room/lamp-1/color", I, O) [artifact_id(C)];
-    json.print(I).
+    readProperty("http://localhost:3000/affordances/smart-room/lamp-1/state", R)
+    println(R)
+    json.parse("{'ciao':1}", J)
+    json.print(J).
 
 
 { include("$jacamoJar/templates/common-cartago.asl") }

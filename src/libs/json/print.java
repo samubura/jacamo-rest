@@ -30,7 +30,8 @@ public class print extends AbstractInternalAction {
     }
 
     @Override
-    protected Object action(TransitionSystem ts, Unifier un, Term[] args) {
+    protected Object action(TransitionSystem ts, Unifier un, Term[] args) throws JasonException {
+        checkArguments(args);
         StringBuilder string = new StringBuilder();
         int objectIndex = 0;
         if(args.length == 2){
@@ -41,10 +42,16 @@ public class print extends AbstractInternalAction {
             //second argument is the object
             objectIndex = 1;
         }
+        ts.getLogger().log(Level.INFO, "OK");
         ObjectTerm obj = (ObjectTerm)args[objectIndex];
+        ts.getLogger().log(Level.INFO, "OK");
         JsonElement json = (JsonElement)obj.getObject();
+        string.append("[");
+        string.append(ts.getAgArch().getAgName());
+        string.append("] ");
         string.append(json.toString());
-        ts.getLogger().log(Level.INFO, string.toString());
+        ;
+        System.out.println(string.toString());
         return true;
     }
 }

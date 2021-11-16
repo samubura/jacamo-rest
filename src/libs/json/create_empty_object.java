@@ -3,6 +3,7 @@ package json;
 import com.google.gson.JsonElement;
 
 import com.google.gson.JsonObject;
+import jason.JasonException;
 import jason.asSemantics.InternalAction;
 import jason.asSemantics.TransitionSystem;
 import jason.asSemantics.Unifier;
@@ -37,7 +38,8 @@ public class create_empty_object extends AbstractInternalAction {
     }
 
     @Override
-    protected Object action(TransitionSystem ts, Unifier un, Term[] args) {
+    protected Object action(TransitionSystem ts, Unifier un, Term[] args) throws JasonException {
+        checkArguments(args);
         JsonElement object = new JsonObject();
         ObjectTerm result = new ObjectTermImpl(object);
         return un.unifies(result, args[0]);
