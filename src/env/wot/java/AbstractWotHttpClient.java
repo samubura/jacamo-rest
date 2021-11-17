@@ -14,9 +14,12 @@ import java.nio.charset.StandardCharsets;
 
 public abstract class AbstractWotHttpClient implements WotHttpClient {
 
+    private static final String IdentityHeader = "x-agent-id";
     private final HttpClient client;
+    private final String agentName;
 
-    public AbstractWotHttpClient(){
+    public AbstractWotHttpClient(String name){
+        this.agentName = name;
         this.client = HttpClients.createDefault();
     }
 
@@ -26,14 +29,18 @@ public abstract class AbstractWotHttpClient implements WotHttpClient {
 
     @Override
     public JsonElement readProperty(String url) throws WotClientException {
-        return executeRequest(getReadRequest(url));
+        HttpUriRequest request = getReadRequest(url);
+        request.setHeader(IdentityHeader, agentName);
+        return executeRequest(request);
     }
 
     public abstract HttpUriRequest getReadRequest(String url) throws WotClientException;
 
     @Override
     public JsonElement invokeAction(String url, JsonElement obj) throws WotClientException {
-        return executeRequest(getInvokeRequest(url, obj));
+        HttpUriRequest request = getInvokeRequest(url, obj);
+        request.setHeader(IdentityHeader, agentName);
+        return executeRequest(request);
     }
 
     public abstract HttpUriRequest getInvokeRequest(String url, JsonElement obj) throws WotClientException;

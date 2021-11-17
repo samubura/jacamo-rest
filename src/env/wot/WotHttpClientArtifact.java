@@ -12,21 +12,17 @@ import wot.java.*;
 public class WotHttpClientArtifact extends Artifact{
 
     private WotHttpClient client;
+    private String name;
 
-    void init() {
-        client = new BasicHttpClient();
+    void init(String name) {
+        this.name = name;
+        this.client = new BasicHttpClient(name);
     }
 
     @OPERATION
-    void authorizeWithApiKey(String location, String tokenName, String tokenValue){
+    void authorizeWithKey(String location, String tokenName, String tokenValue){
         TokenLocation tokenLocation = TokenLocation.valueOf(location.toUpperCase());
-        this.client = new StringTokenAuthenticatedHttpClient(tokenLocation, tokenName, tokenValue);
-    }
-
-    @OPERATION
-    void authorizeWithBasic(String location, String tokenName, String tokenValue){
-        TokenLocation tokenLocation = TokenLocation.valueOf(location.toUpperCase());
-        this.client = new StringTokenAuthenticatedHttpClient(tokenLocation, tokenName, tokenValue);
+        this.client = new StringTokenAuthenticatedHttpClient(this.name, tokenLocation, tokenName, tokenValue);
     }
 
     @OPERATION

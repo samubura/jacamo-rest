@@ -18,7 +18,9 @@ public class StringTokenAuthenticatedHttpClient extends AbstractWotHttpClient {
     private final String tokenName;
     private final String tokenValue;
 
-    public StringTokenAuthenticatedHttpClient(TokenLocation location, String tokenName, String tokenValue){
+
+    public StringTokenAuthenticatedHttpClient(String name, TokenLocation location, String tokenName, String tokenValue){
+        super(name);
         this.location = location;
         this.tokenName = tokenName;
         this.tokenValue = tokenValue;
