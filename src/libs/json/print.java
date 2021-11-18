@@ -1,12 +1,14 @@
 package json;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import jason.JasonException;
 import jason.asSemantics.TransitionSystem;
 import jason.asSemantics.Unifier;
 import jason.asSyntax.ObjectTerm;
 import jason.asSyntax.StringTerm;
 import jason.asSyntax.Term;
+import jason.asSyntax.VarTerm;
 import utils.AbstractInternalAction;
 
 import java.util.logging.Level;
@@ -42,15 +44,19 @@ public class print extends AbstractInternalAction {
             //second argument is the object
             objectIndex = 1;
         }
-        ts.getLogger().log(Level.INFO, "OK");
-        ObjectTerm obj = (ObjectTerm)args[objectIndex];
-        ts.getLogger().log(Level.INFO, "OK");
-        JsonElement json = (JsonElement)obj.getObject();
+
+        JsonElement json;
+        if(args[objectIndex].isString()){ // when coming from cartago
+            StringTerm jsonString = (StringTerm)args[objectIndex];
+            json = new JsonParser().parse(jsonString.getString());
+        } else {
+            json = (JsonElement)((ObjectTerm)args[objectIndex]).getObject();
+        }
+
         string.append("[");
         string.append(ts.getAgArch().getAgName());
         string.append("] ");
         string.append(json.toString());
-        ;
         System.out.println(string.toString());
         return true;
     }
