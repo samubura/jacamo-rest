@@ -52,12 +52,8 @@ public class print extends AbstractInternalAction {
         } else {
             json = (JsonElement)((ObjectTerm)args[objectIndex]).getObject();
         }
-
-        string.append("[");
-        string.append(ts.getAgArch().getAgName());
-        string.append("] ");
         string.append(json.toString());
-        System.out.println(string.toString());
+        ts.getLogger().info(string.toString());
         return true;
     }
 }

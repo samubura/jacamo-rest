@@ -90,7 +90,7 @@ public class set extends AbstractInternalAction {
         }
         else if(valueTerm.isString()) {
             StringTerm term = (StringTerm) valueTerm;
-            value = new JsonParser().parse(term.getString());
+            value = new JsonParser().parse("\""+term.getString() +"\"");
         }
         else {
             //TODO is there any better way to actually check if this is an object reference??
