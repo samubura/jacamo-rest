@@ -1,6 +1,7 @@
 package wot;
 import cartago.*;
 import com.google.gson.JsonElement;
+import org.graalvm.compiler.word.Word;
 import wot.java.*;
 
 /**
@@ -42,4 +43,14 @@ public class WotHttpClientArtifact extends Artifact{
             failed(e.getMessage());
         }
     }
+
+    @OPERATION
+    void invokeAction(String url, OpFeedbackParam<String> result) {
+        try {
+            result.set(client.invokeAction(url, null).toString());
+        } catch (WotClientException e) {
+            failed(e.getMessage());
+        }
+    }
+
 }

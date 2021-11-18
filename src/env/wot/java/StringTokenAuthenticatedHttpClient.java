@@ -61,14 +61,18 @@ public class StringTokenAuthenticatedHttpClient extends AbstractWotHttpClient {
                 case HEADER:
                     req = new HttpPost(uri);
                     req.addHeader(this.tokenName, this.tokenValue);
-                    req.setEntity(new StringEntity(obj.toString(), ContentType.APPLICATION_JSON));
+                    if(obj != null) {
+                        req.setEntity(new StringEntity(obj.toString(), ContentType.APPLICATION_JSON));
+                    }
                     break;
                 case QUERY:
                     URI queryUri = new URIBuilder(uri).
                             addParameter(this.tokenName, this.tokenValue)
                             .build();
                     req = new HttpPost(queryUri);
-                    req.setEntity(new StringEntity(obj.toString(), ContentType.APPLICATION_JSON));
+                    if(obj != null) {
+                        req.setEntity(new StringEntity(obj.toString(), ContentType.APPLICATION_JSON));
+                    }
                     break;
                 case BODY:
                 case COOKIE:

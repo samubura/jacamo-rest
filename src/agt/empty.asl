@@ -13,10 +13,9 @@ x_thing_login(lamp, "basic", "header", "x-credentials", "opensesame").
     json.create_empty_object(I);
     json.set(I, "color", "#ff0000");
     json.print(I);
-    invokeAction("http://localhost:3000/affordances/smart-room/secure-lamp/color",I, O)[artifact_id(ID)];
+    invokeAction("http://localhost:3000/affordances/smart-room/lamp-1/toggle", O)[artifact_id(ID)];
     json.parse(O, J);
-    json.get(J, "string", "color", C);
-    .print(C).
+    json.print(J).
 
 +?xx_get_client(Thing, ID) : x_thing_login(Thing, Scheme, Location, KeyName, Value)
 <-  println("Thing with login");

@@ -22,7 +22,9 @@ public class BasicHttpClient extends AbstractWotHttpClient {
     @Override
     public HttpUriRequest getInvokeRequest(String url, JsonElement obj) {
         HttpPost request = new HttpPost(url);
-        request.setEntity(new StringEntity(obj.toString(), ContentType.APPLICATION_JSON));
+        if(obj != null) {
+            request.setEntity(new StringEntity(obj.toString(), ContentType.APPLICATION_JSON));
+        }
         return request;
     }
 }
