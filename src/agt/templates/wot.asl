@@ -15,7 +15,7 @@
 +jag_shutting_down(X) : xx_wot_client(T, ID)
 <-  .concat("cleaning artifact ", T, M);
     .println(M);
-    dispose(ID);
+    disposeArtifact(ID);
     -xx_wot_client(T,ID);
     -+jag_shutting_down(X).
 
