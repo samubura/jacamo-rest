@@ -189,12 +189,17 @@ public class TranslAg {
      * @return
      * @throws Exception
      */
+    //TODO SAMU modified deadline
     public void deleteAgent(String agName) throws Exception {
+        int deadline = 1000;
         if (BaseCentralisedMAS.getRunner().getAg(agName) != null) {
-            if (!RuntimeServicesFactory.get().killAgent(agName, "web", 0))
+            if (!RuntimeServicesFactory.get().killAgent(agName, "web", deadline))
                 throw new Exception("Unable to kill agent: " + agName);
+        } else {
+            //TODO added else since this was redundant and it is already in the stop method (?)
+            //RestAgArch.deleteWP(JCMRest.getZKClient(), agName);
+            throw new Exception("Unable to kill agent: " + agName);
         }
-        RestAgArch.deleteWP(JCMRest.getZKClient(), agName);
     }
 
     /**

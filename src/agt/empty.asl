@@ -1,7 +1,6 @@
 /* Initial beliefs and rules */
 
 /* Initial goals */
-x_thing_login(lamp, "basic", "header", "x-credentials", "opensesame").
 !start.
 
 
@@ -9,13 +8,22 @@ x_thing_login(lamp, "basic", "header", "x-credentials", "opensesame").
 
 
 +!start : true
-<-  ?xx_get_client(lamp, ID)
-    json.create_empty_object(I);
-    json.set(I, "color", "#ff0000");
-    json.print(I);
-    invokeAction("http://localhost:3000/affordances/smart-room/lamp-1/toggle", O)[artifact_id(ID)];
-    json.parse(O, J);
-    json.print(J).
+<-  ?xx_get_client(lamp, ID1);
+    ?xx_get_client(thing, ID2);
+    ?xx_get_client(john, ID3);
+    ?xx_get_client(bill, ID4);
+    ?xx_get_client(bob, ID5).
+
++jag_shutting_down(X) : xx_get_client(T, ID)
+<-  .concat("cleaning artifact ", T, M);
+    .println(M);
+    disposeArtifact(ID);
+    -xx_get_client(T,ID);
+    -+jag_shutting_down(X).
+
+
++jag_shutting_down(_) : true
+<-  .println("KILLED").
 
 +?xx_get_client(Thing, ID) : x_thing_login(Thing, Scheme, Location, KeyName, Value)
 <-  println("Thing with login");
