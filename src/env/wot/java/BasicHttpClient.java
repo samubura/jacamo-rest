@@ -1,9 +1,8 @@
 package wot.java;
 
 import com.google.gson.JsonElement;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.HttpEntityEnclosingRequest;
+import org.apache.http.client.methods.*;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 
@@ -20,11 +19,16 @@ public class BasicHttpClient extends AbstractWotHttpClient {
     }
 
     @Override
-    public HttpUriRequest getInvokeRequest(String url, JsonElement obj) {
-        HttpPost request = new HttpPost(url);
-        if(obj != null) {
-            request.setEntity(new StringEntity(obj.toString(), ContentType.APPLICATION_JSON));
+    public HttpUriRequest getInvokeRequest(String url, String method, JsonElement obj) {
+        HttpEntityEnclosingRequestBase req;
+        switch (method){
+            case "PUT": req = new HttpPut(url); break;
+            case "POST":
+            default: req = new HttpPost(url); break;
         }
-        return request;
+        if(obj != null) {
+            req.setEntity(new StringEntity(obj.toString(), ContentType.APPLICATION_JSON));
+        }
+        return req;
     }
 }

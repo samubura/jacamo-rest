@@ -5,5 +5,5 @@ import com.google.gson.JsonElement;
 public interface WotHttpClient {
     JsonElement readProperty(String url) throws WotClientException;
 
-    JsonElement invokeAction(String url, JsonElement obj) throws WotClientException;
+    JsonElement invokeAction(String url, String method, JsonElement obj) throws WotClientException;
 }

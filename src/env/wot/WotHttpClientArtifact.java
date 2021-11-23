@@ -36,18 +36,18 @@ public class WotHttpClientArtifact extends Artifact{
     }
 
     @OPERATION
-    void invokeAction(String url, JsonElement obj, OpFeedbackParam<String> result) {
+    void invokeAction(String url, String method, JsonElement obj, OpFeedbackParam<String> result) {
         try {
-            result.set(client.invokeAction(url, obj).toString());
+            result.set(client.invokeAction(url, method, obj).toString());
         } catch (WotClientException e) {
             failed(e.getMessage());
         }
     }
 
     @OPERATION
-    void invokeAction(String url, OpFeedbackParam<String> result) {
+    void invokeAction(String url, String method, OpFeedbackParam<String> result) {
         try {
-            result.set(client.invokeAction(url, null).toString());
+            result.set(client.invokeAction(url, method, null).toString());
         } catch (WotClientException e) {
             failed(e.getMessage());
         }

@@ -1,9 +1,8 @@
 package wot.java;
 
 import com.google.gson.JsonElement;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.HttpEntityEnclosingRequest;
+import org.apache.http.client.methods.*;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
@@ -53,13 +52,17 @@ public class StringTokenAuthenticatedHttpClient extends AbstractWotHttpClient {
     }
 
     @Override
-    public HttpUriRequest getInvokeRequest(String url, JsonElement obj) throws WotClientException {
-        HttpPost req;
+    public HttpUriRequest getInvokeRequest(String url, String method, JsonElement obj) throws WotClientException {
+        HttpEntityEnclosingRequestBase req;
+        switch (method){
+            case "PUT": req = new HttpPut(url); break;
+            case "POST":
+            default: req = new HttpPost(url); break;
+        }
         try {
             URI uri = new URIBuilder(url).build();
             switch(location) {
                 case HEADER:
-                    req = new HttpPost(uri);
                     req.addHeader(this.tokenName, this.tokenValue);
                     if(obj != null) {
                         req.setEntity(new StringEntity(obj.toString(), ContentType.APPLICATION_JSON));
@@ -69,7 +72,7 @@ public class StringTokenAuthenticatedHttpClient extends AbstractWotHttpClient {
                     URI queryUri = new URIBuilder(uri).
                             addParameter(this.tokenName, this.tokenValue)
                             .build();
-                    req = new HttpPost(queryUri);
+                    req.setURI(queryUri);
                     if(obj != null) {
                         req.setEntity(new StringEntity(obj.toString(), ContentType.APPLICATION_JSON));
                     }

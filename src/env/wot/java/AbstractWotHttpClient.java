@@ -37,13 +37,13 @@ public abstract class AbstractWotHttpClient implements WotHttpClient {
     public abstract HttpUriRequest getReadRequest(String url) throws WotClientException;
 
     @Override
-    public JsonElement invokeAction(String url, JsonElement obj) throws WotClientException {
-        HttpUriRequest request = getInvokeRequest(url, obj);
+    public JsonElement invokeAction(String url, String method, JsonElement obj) throws WotClientException {
+        HttpUriRequest request = getInvokeRequest(url, method, obj);
         request.setHeader(IdentityHeader, agentName);
         return executeRequest(request);
     }
 
-    public abstract HttpUriRequest getInvokeRequest(String url, JsonElement obj) throws WotClientException;
+    public abstract HttpUriRequest getInvokeRequest(String url, String method, JsonElement obj) throws WotClientException;
 
     private JsonElement executeRequest(HttpUriRequest request) throws WotClientException {
         HttpResponse res;
