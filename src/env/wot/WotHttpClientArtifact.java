@@ -1,7 +1,6 @@
 package wot;
 import cartago.*;
 import com.google.gson.JsonElement;
-import org.graalvm.compiler.word.Word;
 import wot.java.*;
 
 /**
